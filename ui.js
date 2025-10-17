@@ -204,6 +204,14 @@ class ChouineUI {
             this.showAnnouncement(result.announcement, 'human');
         }
 
+        // If game ended with instant win (Chouine), handle it immediately
+        if (result.gameOver && result.instantWin) {
+            await this.delay(2000); // Let user see the announcement
+            this.handleGameOver(result);
+            this.animating = false;
+            return;
+        }
+
         this.updateUI();
 
         // If trick is complete
@@ -276,6 +284,14 @@ class ChouineUI {
             this.showAnnouncement(result.announcement, 'ai');
         }
 
+        // If game ended with instant win (Chouine), handle it immediately
+        if (result.gameOver && result.instantWin) {
+            await this.delay(2000); // Let user see the announcement
+            this.handleGameOver(result);
+            this.animating = false;
+            return;
+        }
+
         this.updateUI();
 
         // If trick is complete
@@ -343,11 +359,12 @@ class ChouineUI {
     showAnnouncement(announcement, player) {
         if (!announcement) return;
 
-        const playerName = player === 'human' ? 'Vous' : "L'IA";
         let message = '';
 
         if (announcement.instantWin) {
-            message = `${playerName} avez une CHOUINE ! Victoire immédiate !`;
+            message = player === 'human'
+                ? 'Vous avez une CHOUINE ! Victoire immédiate !'
+                : "L'IA a une CHOUINE ! Victoire immédiate !";
         } else {
             const typeNames = {
                 'mariage': 'Mariage',
@@ -355,7 +372,10 @@ class ChouineUI {
                 'quarteron': 'Quarteron',
                 'quinte': 'Quinte'
             };
-            message = `${playerName} annoncez ${typeNames[announcement.type]} pour ${announcement.points} points !`;
+            const announcementName = typeNames[announcement.type];
+            message = player === 'human'
+                ? `Vous annoncez ${announcementName} pour ${announcement.points} points !`
+                : `L'IA annonce ${announcementName} pour ${announcement.points} points !`;
         }
 
         this.showMessage(message, 'success');

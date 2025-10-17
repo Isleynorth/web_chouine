@@ -22,6 +22,9 @@ class ChouineGame {
     }
 
     startNewGame() {
+        // Switch dealer for fairness (dealer alternates each game)
+        this.dealer = this.dealer === 'human' ? 'ai' : 'human';
+
         // Reset game state
         this.deck = new Deck();
         this.deck.shuffle();
@@ -116,6 +119,26 @@ class ChouineGame {
 
         // Check for announcements when playing the card
         const announcement = this.checkAnnouncements(player, card);
+
+        // If Chouine, game ends immediately
+        if (announcement && announcement.instantWin) {
+            this.players[player].gameWins++;
+            return {
+                success: true,
+                gameOver: true,
+                instantWin: true,
+                announcement: announcement,
+                scores: {
+                    human: this.players.human.score,
+                    ai: this.players.ai.score
+                },
+                winner: player,
+                gameWins: {
+                    human: this.players.human.gameWins,
+                    ai: this.players.ai.gameWins
+                }
+            };
+        }
 
         // Add to current trick
         this.currentTrick[player] = card;

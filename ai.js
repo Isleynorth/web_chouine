@@ -211,7 +211,7 @@ class ChouineAI {
         // Check for Quinte
         if (!this.game.announcedCombos.ai.has('quinte')) {
             const brisques = hand.filter(c => c.isBrisque());
-            if (brisques.length >= 5 && brisques.length > 0) {
+            if (brisques.length >= 5) {
                 bestPoints = 100;
                 bestCard = brisques[0];
             }
