@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouine - Jeu de Cartes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>🃏 La Chouine 🃏</h1>
+
+    <div class="game-container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="score-display">
+                <div id="human-score">Vous: 0 points (0 victoires)</div>
+                <div id="ai-score">IA: 0 points (0 victoires)</div>
+            </div>
+
+            <div class="game-info">
+                <div id="game-phase">Phase 1: Jeu libre</div>
+                <div id="talon-info">Talon: 21 cartes</div>
+                <div id="current-turn">À votre tour</div>
+            </div>
+
+            <div class="game-controls">
+                <button id="new-game-btn">Nouvelle Partie</button>
+                <button id="exchange-seven-btn" class="disabled" disabled>Échanger 7♦</button>
+            </div>
+        </div>
+
+        <!-- Game Table -->
+        <div class="game-table">
+            <!-- AI Section -->
+            <div class="ai-section">
+                <div id="ai-hand" class="ai-hand">
+                    <!-- AI cards will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Playing Area -->
+            <div class="playing-area">
+                <!-- Trump Card -->
+                <div class="trump-area">
+                    <div class="trump-label">Atout</div>
+                    <div id="trump-card">
+                        <!-- Trump card will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Current Trick -->
+                <div class="trick-area">
+                    <div id="ai-trick-card" class="trick-card">
+                        <!-- AI's played card -->
+                    </div>
+                    <div id="human-trick-card" class="trick-card">
+                        <!-- Human's played card -->
+                    </div>
+                </div>
+
+                <!-- Talon -->
+                <div class="talon-area">
+                    <div class="talon-label">Pioche</div>
+                    <div id="talon-display" class="talon-display">
+                        21
+                    </div>
+                </div>
+
+                <!-- Message Box -->
+                <div id="message-box" class="message-box">
+                    Message
+                </div>
+            </div>
+
+            <!-- Human Section -->
+            <div class="human-section">
+                <div id="human-hand" class="human-hand">
+                    <!-- Human cards will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="cards.js"></script>
+    <script src="game.js"></script>
+    <script src="ai.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
