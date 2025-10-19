@@ -524,13 +524,26 @@ h1 {
     }
 
     .game-header {
+        display: flex;
         flex-direction: column;
         gap: 15px;
+    }
+
+    .score-display,
+    .game-info,
+    .game-controls {
+        justify-self: center;
+        text-align: center;
     }
 
     .card {
         width: 60px;
         height: 85px;
+    }
+
+    .card-rank,
+    .card-suit {
+        font-size: 1.8rem;
     }
 
     .human-hand {
@@ -540,6 +553,86 @@ h1 {
     .trick-area {
         gap: 20px;
         padding: 15px;
+    }
+
+    /* Optimisation des seed controls */
+    .seed-controls {
+        gap: 5px;
+    }
+
+    .seed-display-group {
+        font-size: 0.85rem;
+    }
+
+    #seed-display {
+        min-width: 80px;
+        padding: 4px 8px;
+        font-size: 0.85rem;
+    }
+
+    #seed-input {
+        padding: 6px;
+        font-size: 0.85rem;
+    }
+
+    #replay-seed-btn,
+    #copy-seed-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Message box optimisation */
+    .message-box {
+        max-width: 90%;
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* Orientation paysage mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .game-table {
+        min-height: auto;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .game-header {
+        gap: 10px;
+    }
+}
+
+/* Très petits écrans (≤360px) */
+@media (max-width: 360px) {
+    .card {
+        width: 50px;
+        height: 71px;
+    }
+
+    .card-rank,
+    .card-suit {
+        font-size: 1.5rem;
+    }
+
+    .human-hand,
+    .ai-hand {
+        gap: 8px;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    .game-container {
+        padding: 10px;
+    }
+
+    .message-box {
+        padding: 12px 15px;
+        font-size: 0.95rem;
     }
 }
 
