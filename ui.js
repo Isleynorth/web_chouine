@@ -159,14 +159,9 @@ class ChouineUI {
         const color = SUIT_COLORS[card.suit];
         cardDiv.innerHTML = `
             <div class="card-front">
-                <div class="card-corner top-left">
-                    <div class="card-rank" style="color: ${color}">${card.rank.display}</div>
-                </div>
                 <div class="card-center" style="color: ${color}">
-                    ${SUIT_SYMBOLS[card.suit]}
-                </div>
-                <div class="card-corner bottom-right">
-                    <div class="card-rank" style="color: ${color}">${card.rank.display}</div>
+                    <div class="card-rank">${card.rank.display}</div>
+                    <div class="card-suit">${SUIT_SYMBOLS[card.suit]}</div>
                 </div>
             </div>
         `;
