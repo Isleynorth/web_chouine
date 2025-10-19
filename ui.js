@@ -24,16 +24,31 @@ class ChouineUI {
         document.getElementById('exchange-seven-btn').addEventListener('click', () => {
             this.handleExchangeSeven();
         });
+
+        document.getElementById('copy-seed-btn').addEventListener('click', () => {
+            this.copySeedToClipboard();
+        });
+
+        document.getElementById('replay-seed-btn').addEventListener('click', () => {
+            this.replayWithSeed();
+        });
     }
 
-    startNewGame() {
-        const result = this.game.startNewGame();
+    async startNewGame(seed = null) {
+        const result = this.game.startNewGame(seed);
 
         // Reset hand tracking to treat all initial cards as new
         this.previousHandIds = { human: [], ai: [] };
 
         this.updateUI();
-        this.showMessage("Nouvelle partie ! Atout: " + SUIT_SYMBOLS[this.game.trumpSuit]);
+        this.updateSeedDisplay();
+        this.showMessage("Nouvelle partie ! Atout: " + SUIT_SYMBOLS[this.game.trumpSuit] + " (Seed: " + this.game.seed + ")");
+
+        // If AI starts, trigger its turn
+        if (this.game.currentPlayer === 'ai') {
+            await this.delay(1000);
+            await this.handleAITurn();
+        }
     }
 
     updateUI() {
@@ -212,7 +227,17 @@ class ChouineUI {
             return;
         }
 
-        this.updateUI();
+        // Update UI, but skip AI hand if AI will play next (to avoid premature render)
+        const skipAIHand = !result.trickWinner;
+        this.renderHumanHand();
+        if (!skipAIHand) {
+            this.renderAIHand();
+        }
+        this.renderTrumpCard();
+        this.renderCurrentTrick();
+        this.updateScoreDisplay();
+        this.updateGameInfo();
+        this.updateExchangeButton();
 
         // If trick is complete
         if (result.trickWinner) {
@@ -260,6 +285,9 @@ class ChouineUI {
         this.animating = true;
         this.showMessage("L'IA réfléchit...", 'info');
 
+        // Render AI hand just before playing to ensure visual consistency
+        this.renderAIHand();
+
         const move = await this.ai.makeMove();
 
         if (move.type === 'exchange') {
@@ -292,7 +320,18 @@ class ChouineUI {
             return;
         }
 
-        this.updateUI();
+        // First, show the AI's played card in the trick area
+        this.renderCurrentTrick();
+        this.updateScoreDisplay();
+        this.updateGameInfo();
+
+        // Wait a moment so the user can see the card being played
+        await this.delay(200);
+
+        // Then update AI hand and other UI elements
+        this.renderAIHand();
+        this.renderTrumpCard();
+        this.updateExchangeButton();
 
         // If trick is complete
         if (result.trickWinner) {
@@ -415,11 +454,9 @@ class ChouineUI {
 
     updateGameInfo() {
         const phase = this.game.gamePhase === 1 ? "Phase 1: Jeu libre" : "Phase 2: Règles strictes";
-        const talon = `Talon: ${this.game.deck.size()} cartes`;
         const turn = this.game.currentPlayer === 'human' ? "À votre tour" : "Tour de l'IA";
 
         document.getElementById('game-phase').textContent = phase;
-        document.getElementById('talon-info').textContent = talon;
         document.getElementById('current-turn').textContent = turn;
 
         // Update talon display
@@ -441,6 +478,43 @@ class ChouineUI {
                 messageBox.style.display = 'none';
             }, 3000);
         }
+    }
+
+    updateSeedDisplay() {
+        const seedDisplay = document.getElementById('seed-display');
+        if (seedDisplay && this.game.seed !== null) {
+            seedDisplay.textContent = this.game.seed;
+        }
+    }
+
+    copySeedToClipboard() {
+        if (this.game.seed !== null) {
+            navigator.clipboard.writeText(this.game.seed.toString()).then(() => {
+                this.showMessage("Seed copié dans le presse-papier !", 'success');
+            }).catch(err => {
+                console.error('Failed to copy seed:', err);
+                this.showMessage("Erreur lors de la copie du seed", 'error');
+            });
+        }
+    }
+
+    replayWithSeed() {
+        const seedInput = document.getElementById('seed-input');
+        const seedValue = seedInput.value.trim();
+
+        if (seedValue === '') {
+            this.showMessage("Veuillez entrer un seed", 'error');
+            return;
+        }
+
+        const seed = parseInt(seedValue, 10);
+        if (isNaN(seed)) {
+            this.showMessage("Le seed doit être un nombre", 'error');
+            return;
+        }
+
+        this.startNewGame(seed);
+        seedInput.value = ''; // Clear input after use
     }
 
     delay(ms) {

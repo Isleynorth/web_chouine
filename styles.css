@@ -110,6 +110,89 @@ h1 {
     opacity: 0.6;
 }
 
+/* Seed Controls */
+.seed-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.seed-display-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.seed-display-group label {
+    font-weight: bold;
+}
+
+#seed-display {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    min-width: 100px;
+    text-align: center;
+}
+
+#copy-seed-btn {
+    background: var(--success-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#copy-seed-btn:hover {
+    background: #229954;
+    transform: scale(1.1);
+}
+
+.seed-input-group {
+    display: flex;
+    gap: 5px;
+}
+
+#seed-input {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+#seed-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+#replay-seed-btn {
+    background: var(--warning-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+#replay-seed-btn:hover {
+    background: #e67e22;
+    transform: translateY(-2px);
+}
+
 /* Message Box */
 .message-box {
     position: absolute;

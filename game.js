@@ -19,14 +19,21 @@ class ChouineGame {
         this.gameOver = false;
         this.gameWinner = null;
         this.sevenExchanged = false;
+        this.seed = null; // Current seed for reproducibility
     }
 
-    startNewGame() {
+    startNewGame(seed = null) {
         // Switch dealer for fairness (dealer alternates each game)
         this.dealer = this.dealer === 'human' ? 'ai' : 'human';
 
+        // Generate or use provided seed
+        this.seed = seed !== null ? seed : generateSeed();
+
+        // Create RNG from seed
+        const rng = createRNG(this.seed);
+
         // Reset game state
-        this.deck = new Deck();
+        this.deck = new Deck(rng);
         this.deck.shuffle();
         this.players.human.hand = [];
         this.players.ai.hand = [];
@@ -62,7 +69,8 @@ class ChouineGame {
             humanHand: this.players.human.hand,
             aiHandSize: this.players.ai.hand.length,
             trumpCard: this.trumpCard,
-            currentPlayer: this.currentPlayer
+            currentPlayer: this.currentPlayer,
+            seed: this.seed
         };
     }
 
