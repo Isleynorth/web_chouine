@@ -534,6 +534,37 @@ h1 {
     .game-controls {
         justify-self: center;
         text-align: center;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .game-controls {
+        align-items: center;
+    }
+
+    .game-controls button,
+    .seed-controls,
+    .seed-input-group {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #new-game-btn {
+        padding: 10px 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #seed-input {
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    #replay-seed-btn {
+        flex-shrink: 0;
+        padding: 6px 12px;
     }
 
     .card {
@@ -633,6 +664,16 @@ h1 {
     .message-box {
         padding: 12px 15px;
         font-size: 0.95rem;
+    }
+
+    #new-game-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    #replay-seed-btn {
+        padding: 5px 10px;
+        font-size: 0.85rem;
     }
 }
 
