@@ -460,17 +460,9 @@ class ChouineUI {
     }
 
     showMessage(message, type = 'info') {
-        const messageBox = document.getElementById('message-box');
+        const messageBox = document.getElementById('game-message');
         messageBox.textContent = message;
-        messageBox.className = 'message-box ' + type;
-        messageBox.style.display = 'block';
-
-        // Auto-hide after 3 seconds for non-game-over messages
-        if (!this.game.gameOver) {
-            setTimeout(() => {
-                messageBox.style.display = 'none';
-            }, 3000);
-        }
+        messageBox.className = type;
     }
 
     updateSeedDisplay() {

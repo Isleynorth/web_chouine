@@ -193,38 +193,28 @@ h1 {
     transform: translateY(-2px);
 }
 
-/* Message Box */
-.message-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: var(--shadow-lg);
-    font-size: 1.15rem;
+/* Game Message */
+#game-message {
+    color: white;
+    font-size: 0.95rem;
     font-weight: bold;
-    z-index: 1000;
-    display: none;
     text-align: center;
-    max-width: 80%;
+    min-height: 1.2em;
+    margin-top: 5px;
     white-space: pre-line;
+    line-height: 1.3;
 }
 
-.message-box.success {
-    background: var(--success-color);
-    color: white;
+#game-message.success {
+    color: #2ecc71;
 }
 
-.message-box.error {
-    background: var(--error-color);
-    color: white;
+#game-message.error {
+    color: #e74c3c;
 }
 
-.message-box.info {
-    background: var(--accent-color);
-    color: white;
+#game-message.info {
+    color: #3498db;
 }
 
 /* Game Table Layout */
@@ -613,11 +603,9 @@ h1 {
         font-size: 0.85rem;
     }
 
-    /* Message box optimisation */
-    .message-box {
-        max-width: 90%;
-        padding: 15px 20px;
-        font-size: 1rem;
+    /* Game message optimisation */
+    #game-message {
+        font-size: 0.85rem;
     }
 }
 
@@ -662,9 +650,8 @@ h1 {
         padding: 10px;
     }
 
-    .message-box {
-        padding: 12px 15px;
-        font-size: 0.95rem;
+    #game-message {
+        font-size: 0.8rem;
     }
 
     #new-game-btn {
