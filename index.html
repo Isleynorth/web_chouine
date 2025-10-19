@@ -23,6 +23,24 @@
                 <div id="game-message"></div>
             </div>
 
+            <!-- Deck Info: Trump and Talon -->
+            <div class="game-deck-info">
+                <div class="trump-area">
+                    <div class="trump-label">Atout</div>
+                    <div id="trump-card">
+                        <!-- Trump card will be rendered here -->
+                    </div>
+                    <button id="exchange-seven-btn" class="disabled" disabled>Échanger 7♦</button>
+                </div>
+
+                <div class="talon-area">
+                    <div class="talon-label">Talon</div>
+                    <div id="talon-display" class="talon-display">
+                        21
+                    </div>
+                </div>
+            </div>
+
             <div class="game-controls">
                 <button id="new-game-btn">Nouvelle Partie</button>
 
@@ -52,15 +70,6 @@
 
             <!-- Playing Area -->
             <div class="playing-area">
-                <!-- Trump Card -->
-                <div class="trump-area">
-                    <div class="trump-label">Atout</div>
-                    <div id="trump-card">
-                        <!-- Trump card will be rendered here -->
-                    </div>
-                    <button id="exchange-seven-btn" class="disabled" disabled>Échanger 7♦</button>
-                </div>
-
                 <!-- Current Trick -->
                 <div class="trick-area">
                     <div id="ai-trick-card" class="trick-card">
@@ -68,14 +77,6 @@
                     </div>
                     <div id="human-trick-card" class="trick-card">
                         <!-- Human's played card -->
-                    </div>
-                </div>
-
-                <!-- Talon -->
-                <div class="talon-area">
-                    <div class="talon-label">Talon</div>
-                    <div id="talon-display" class="talon-display">
-                        21
                     </div>
                 </div>
             </div>
