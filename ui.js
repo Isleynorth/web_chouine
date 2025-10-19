@@ -173,7 +173,7 @@ class ChouineUI {
             </div>
         `;
 
-        if (clickable && this.game.currentPlayer === 'human' && !this.animating) {
+        if (clickable && this.game.currentPlayer === 'human' && !this.animating && !this.game.gameOver) {
             cardDiv.classList.add('clickable');
             cardDiv.addEventListener('click', () => this.handleCardClick(card));
 
@@ -195,7 +195,7 @@ class ChouineUI {
     }
 
     async handleCardClick(card) {
-        if (this.animating || this.game.currentPlayer !== 'human') {
+        if (this.animating || this.game.currentPlayer !== 'human' || this.game.gameOver) {
             return;
         }
 

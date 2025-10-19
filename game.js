@@ -131,6 +131,8 @@ class ChouineGame {
         // If Chouine, game ends immediately
         if (announcement && announcement.instantWin) {
             this.players[player].gameWins++;
+            this.gameOver = true;
+            this.gameWinner = player;
             return {
                 success: true,
                 gameOver: true,
