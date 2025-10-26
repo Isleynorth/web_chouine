@@ -20,6 +20,7 @@ class ChouineGame {
         this.gameWinner = null;
         this.sevenExchanged = false;
         this.seed = null; // Current seed for reproducibility
+        this.matchTarget = 2; // Number of games to win the match (default: best of 3)
     }
 
     startNewGame(seed = null) {
@@ -454,6 +455,10 @@ class ChouineGame {
 
     clearTrick() {
         this.currentTrick = { human: null, ai: null };
+    }
+
+    setMatchTarget(target) {
+        this.matchTarget = target;
     }
 
     getGameState() {

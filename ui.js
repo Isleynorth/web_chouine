@@ -7,6 +7,7 @@ class ChouineUI {
         this.selectedCard = null;
         this.animating = false;
         this.previousHandIds = { human: [], ai: [] };
+        this.matchMode = 3; // 3 or 5 manches (best of 3 or best of 5)
     }
 
     init() {
@@ -19,6 +20,10 @@ class ChouineUI {
     setupEventListeners() {
         document.getElementById('new-game-btn').addEventListener('click', () => {
             this.startNewGame();
+        });
+
+        document.getElementById('toggle-match-btn').addEventListener('click', () => {
+            this.toggleMatchMode();
         });
 
         document.getElementById('exchange-seven-btn').addEventListener('click', () => {
@@ -427,10 +432,10 @@ class ChouineUI {
 
         message += `\nScore de la manche: Vous ${result.gameWins.human} - IA ${result.gameWins.ai}`;
 
-        // Check if match is won (best of 3)
-        if (result.gameWins.human >= 2) {
+        // Check if match is won
+        if (result.gameWins.human >= this.game.matchTarget) {
             message += "\n🏆 Vous remportez la manche !";
-        } else if (result.gameWins.ai >= 2) {
+        } else if (result.gameWins.ai >= this.game.matchTarget) {
             message += "\n🏆 L'IA remporte la manche !";
         }
 
@@ -500,6 +505,21 @@ class ChouineUI {
 
         this.startNewGame(seed);
         seedInput.value = ''; // Clear input after use
+    }
+
+    toggleMatchMode() {
+        // Toggle between 3 and 5 manches
+        this.matchMode = this.matchMode === 3 ? 5 : 3;
+
+        // Update game match target (2 for best of 3, 3 for best of 5)
+        const target = this.matchMode === 3 ? 2 : 3;
+        this.game.setMatchTarget(target);
+
+        // Update button text
+        const btn = document.getElementById('toggle-match-btn');
+        btn.textContent = `Match: ${this.matchMode} manches`;
+
+        this.showMessage(`Mode changé: ${this.matchMode} manches (premier à ${target})`, 'success');
     }
 
     delay(ms) {
