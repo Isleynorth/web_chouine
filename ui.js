@@ -384,6 +384,11 @@ class ChouineUI {
 
     updateExchangeButton() {
         const btn = document.getElementById('exchange-seven-btn');
+
+        // Update button text with current trump suit symbol
+        const trumpSymbol = SUIT_SYMBOLS[this.game.trumpSuit];
+        btn.textContent = `Échanger 7${trumpSymbol}`;
+
         if (this.game.canExchangeSeven('human') && !this.animating) {
             btn.disabled = false;
             btn.classList.remove('disabled');
