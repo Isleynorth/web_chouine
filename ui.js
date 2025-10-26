@@ -221,6 +221,8 @@ class ChouineUI {
         if (result.gameOver && result.instantWin) {
             await this.delay(2000); // Let user see the announcement
             this.handleGameOver(result);
+            // Keep message visible longer
+            await this.delay(3000);
             this.animating = false;
             return;
         }
@@ -249,7 +251,11 @@ class ChouineUI {
             await this.delay(1500);
 
             if (result.gameOver) {
+                // Add delay before showing game over message
+                await this.delay(1000);
                 this.handleGameOver(result);
+                // Keep message visible longer
+                await this.delay(3000);
                 this.animating = false;
                 return;
             }
@@ -265,6 +271,12 @@ class ChouineUI {
                 this.animating = false;
                 await this.handleAITurn();
             } else {
+                // Still human's turn, clear any stray messages
+                const messageBox = document.getElementById('game-message');
+                if (messageBox.textContent === "L'IA réfléchit...") {
+                    messageBox.textContent = '';
+                    messageBox.className = '';
+                }
                 this.animating = false;
             }
         } else {
@@ -314,6 +326,8 @@ class ChouineUI {
         if (result.gameOver && result.instantWin) {
             await this.delay(2000); // Let user see the announcement
             this.handleGameOver(result);
+            // Keep message visible longer
+            await this.delay(3000);
             this.animating = false;
             return;
         }
@@ -344,7 +358,11 @@ class ChouineUI {
             await this.delay(1500);
 
             if (result.gameOver) {
+                // Add delay before showing game over message
+                await this.delay(1000);
                 this.handleGameOver(result);
+                // Keep message visible longer
+                await this.delay(3000);
                 this.animating = false;
                 return;
             }
@@ -360,12 +378,24 @@ class ChouineUI {
                 this.animating = false;
                 await this.handleAITurn();
             } else {
+                // Human's turn now, clear any AI messages
+                const messageBox = document.getElementById('game-message');
+                if (messageBox.textContent === "L'IA réfléchit...") {
+                    messageBox.textContent = '';
+                    messageBox.className = '';
+                }
                 this.animating = false;
             }
         } else {
             // Trick not complete, human's turn
             this.animating = false;
             this.updateUI();
+            // Clear "L'IA réfléchit..." since it's now human's turn
+            const messageBox = document.getElementById('game-message');
+            if (messageBox.textContent === "L'IA réfléchit...") {
+                messageBox.textContent = '';
+                messageBox.className = '';
+            }
         }
     }
 
@@ -426,13 +456,17 @@ class ChouineUI {
     handleGameOver(result) {
         const winner = result.winner;
         let message = '';
+        let messageType = 'info';
 
         if (winner === 'human') {
-            message = `Vous gagnez ${result.scores.human} à ${result.scores.ai} !`;
+            message = `Vous avez gagné !\nScore: ${result.scores.human} à ${result.scores.ai}`;
+            messageType = 'success';
         } else if (winner === 'ai') {
-            message = `L'IA gagne ${result.scores.ai} à ${result.scores.human} !`;
+            message = `Vous avez perdu !\nScore: ${result.scores.ai} à ${result.scores.human}`;
+            messageType = 'error';
         } else {
             message = `Égalité ${result.scores.human} à ${result.scores.ai} !`;
+            messageType = 'info';
         }
 
         message += `\nScore de la manche: Vous ${result.gameWins.human} - IA ${result.gameWins.ai}`;
@@ -444,8 +478,16 @@ class ChouineUI {
             message += "\n🏆 L'IA remporte la manche !";
         }
 
-        this.showMessage(message, winner === 'human' ? 'success' : 'info');
+        // First, explicitly clear any existing message
+        const messageBox = document.getElementById('game-message');
+        messageBox.textContent = '';
+        messageBox.className = '';
+
+        // Update UI
         this.updateUI();
+
+        // Show the game over message
+        this.showMessage(message, messageType);
     }
 
     updateScoreDisplay() {
@@ -466,6 +508,14 @@ class ChouineUI {
         const talonDisplay = document.getElementById('talon-display');
         if (talonDisplay) {
             talonDisplay.textContent = this.game.deck.size();
+        }
+
+        // Clear "L'IA réfléchit..." message only during active play when it's human's turn
+        // Don't touch the message when game is over - handleGameOver() will display the right message
+        const messageBox = document.getElementById('game-message');
+        if (messageBox.textContent === "L'IA réfléchit..." && this.game.currentPlayer === 'human' && !this.game.gameOver) {
+            messageBox.textContent = '';
+            messageBox.className = '';
         }
     }
 
